@@ -19,11 +19,6 @@ class ShareCounter
     end
   end
 
-  def self.twitter url
-    html = make_request "http://urls.api.twitter.com/1/urls/count.json",  url: url
-    return JSON.parse(html)['count']
-  end
-
   def self.facebook url
     html = make_request "https://api.facebook.com/method/fql.query", format: "json", query: "select commentsbox_count, click_count, total_count, comment_count, like_count, share_count from link_stat where url=\"#{url}\""
     return JSON.parse(html, symbolize_names: true)[0]
@@ -61,7 +56,7 @@ class ShareCounter
   # helpers - get all or selected networks
 
   def self.supported_networks
-    %w(reddit twitter facebook linkedin googleplus delicious stumbleupon pinterest)
+    %w(reddit facebook linkedin googleplus delicious stumbleupon pinterest)
   end
 
   def self.all url
